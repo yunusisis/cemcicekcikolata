@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ürünler | Cem Çiçek & Çikolata</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Cem Çiçek & Çikolata ürünleri: çiçek buketleri, aranjmanlar, kutuda çikolatalar ve kombin seçenekleri." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://example.com/urunler.html" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+
+  <style>
+    :root{
+      --bg:#0B0F14;
+      --text:#EAF2FF;
+      --muted:#A7B4C8;
+      --brand:#FF3B7A;
+      --brand2:#7C5CFF;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+    }
+    html,body{ background:var(--bg); color:var(--text); }
+    a{ color:inherit; }
+    .topbar{
+      position:sticky; top:0; z-index:999;
+      background: rgba(11,15,20,.70);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .brandmark{
+      width:34px; height:34px; border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 55%),
+                  linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 10px 25px rgba(255,59,122,.25);
+    }
+    .btn-cta{
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      border:0; color:#fff; font-weight:900;
+      border-radius: 14px; padding:.55rem .85rem;
+      box-shadow: 0 16px 45px rgba(124,92,255,.22);
+    }
+    .btn-soft{
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff; font-weight:900;
+      border-radius: 14px;
+      padding:.55rem .85rem;
+    }
+    .page-hero{
+      padding: 1.2rem 0 0.6rem;
+    }
+    .page-hero h1{
+      font-weight: 950;
+      letter-spacing: -.6px;
+      font-size: clamp(1.6rem, 4.8vw, 2.2rem);
+      margin: 0 0 .35rem;
+    }
+    .page-hero p{ color: var(--muted); margin:0; }
+
+    /* Tabs */
+    .cat-tabs{ display:flex; gap:.5rem; flex-wrap:wrap; margin: 1rem 0; }
+    .cat-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,242,255,.9);
+      padding:.45rem .75rem;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size:.9rem;
+      transition:.2s transform ease, .2s background ease, .2s border-color ease;
+    }
+    .cat-btn.active{
+      background: linear-gradient(90deg, rgba(255,59,122,.9), rgba(124,92,255,.9));
+      border-color: rgba(255,255,255,.26);
+    }
+    .cat-btn:active{ transform: scale(.98); }
+
+    /* Search */
+    .searchbox{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: .6rem .8rem;
+      color: var(--text);
+      outline: none;
+      width: 100%;
+    }
+    .searchbox::placeholder{ color: rgba(234,242,255,.55); }
+
+    /* Product cards */
+    .product-card{
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: radial-gradient(circle at 20% 10%, rgba(255,59,122,.14), transparent 45%),
+                  radial-gradient(circle at 80% 10%, rgba(124,92,255,.14), transparent 55%),
+                  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      height:100%;
+      transition: .25s transform ease, .25s border-color ease, .25s box-shadow ease;
+    }
+    .product-card:hover{
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 22px 70px rgba(0,0,0,.55);
+    }
+    .product-media{ height: 170px; background: linear-gradient(135deg, rgba(255,59,122,.28), rgba(124,92,255,.22)); }
+    .product-media img{
+      width:100%; height:100%; object-fit:cover;
+      transform: scale(1.06);
+      filter: saturate(1.05) contrast(1.02);
+      transition: .35s transform ease;
+    }
+    .product-card:hover .product-media img{ transform: scale(1.12); }
+    .product-body{ padding: 1rem 1rem .95rem; }
+    .product-title{ font-weight: 950; margin:0 0 .35rem; font-size: 1.05rem; }
+    .product-desc{ color: var(--muted); margin:0 0 .85rem; line-height:1.45; min-height: 44px; }
+    .product-meta{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; }
+    .chip{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      padding:.32rem .6rem;
+      border-radius: 999px;
+      color: rgba(234,242,255,.9);
+      font-weight: 900;
+      font-size: .82rem;
+      white-space:nowrap;
+    }
+    .price{ font-weight: 950; font-size: 1.05rem; letter-spacing: -.2px; }
+    .btn-buy{ width:100%; margin-top:.9rem; border-radius: 14px; font-weight: 950; }
+
+    /* Reveal */
+    .reveal{ opacity:0; transform: translateY(18px); transition: .7s opacity ease, .7s transform cubic-bezier(.2,.9,.2,1); }
+    .reveal.is-visible{ opacity:1; transform: translateY(0); }
+
+    footer{ border-top:1px solid var(--line); padding: 1.2rem 0 2rem; color: rgba(234,242,255,.70); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Ürünler | Cem Çiçek & Çikolata",
+    "about":["Çiçek","Çikolata","Hediye"],
+    "isPartOf":{"@type":"WebSite","name":"Cem Çiçek & Çikolata","url":"https://example.com/"}
+  }
+  </script>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container py-2 d-flex align-items-center justify-content-between">
+      <a class="d-flex align-items-center font-weight-bold" href="index.html" aria-label="Ana sayfaya dön">
+        <span class="brandmark mr-2" aria-hidden="true"></span>
+        Cem Çiçek & Çikolata
+      </a>
+      <div class="d-flex align-items-center" style="gap:.5rem;">
+        <a class="btn btn-soft btn-sm" href="index.html#iletisim">İletişim</a>
+        <a class="btn btn-cta btn-sm" href="index.html">Ana Sayfa</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="page-hero reveal">
+      <h1>Ürünler</h1>
+      <p>Çiçek • Çikolata • Kombin. Filtrele, ara, seç ve hızlı siparişe geç.</p>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-12 col-md-7">
+        <div class="cat-tabs reveal" role="tablist" aria-label="Ürün kategorileri">
+          <button class="cat-btn active" type="button" data-filter="all">Hepsi</button>
+          <button class="cat-btn" type="button" data-filter="cicek">Çiçek</button>
+          <button class="cat-btn" type="button" data-filter="cikolata">Çikolata</button>
+          <button class="cat-btn" type="button" data-filter="kombin">Kombin</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-5">
+        <input id="searchInput" class="searchbox reveal" placeholder="Ürün ara: gül, orkide, bitter..." aria-label="Ürün ara" />
+      </div>
+    </div>
+
+    <div class="row mt-2" id="productGrid">
+      <!-- ÖRNEK ÜRÜNLER (çoğalt) -->
+      <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cicek" data-name="kırmızı gül buketi gül">
+        <article class="product-card" itemscope itemtype="https://schema.org/Product">
+          <div class="product-media">
+            <img src="assets/1.jpeg" alt="Kırmızı gül buketi" loading="lazy" itemprop="image">
+          </div>
+          <div class="product-body">
+            <h3 class="product-title" itemprop="name">Kırmızı Gül Buketi</h3>
+            <p class="product-desc" itemprop="description">Şık kurdele, canlı güller, premium paket.</p>
+            <div class="product-meta">
+              <span class="chip">Çiçek</span>
+              <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1290</span>
+              </span>
+            </div>
+            <a class="btn btn-cta btn-buy" href="index.html#iletisim">Sipariş Ver</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cikolata" data-name="gold kutu karışık çikolata bitter sütlü">
+        <article class="product-card" itemscope itemtype="https://schema.org/Product">
+          <div class="product-media">
+            <img src="assets/2.jpg" alt="Gold kutu karışık çikolata" loading="lazy" itemprop="image">
+          </div>
+          <div class="product-body">
+            <h3 class="product-title" itemprop="name">Gold Kutu Karışık Çikolata</h3>
+            <p class="product-desc" itemprop="description">Bitter + sütlü karışım, hediye notu dahil.</p>
+            <div class="product-meta">
+              <span class="chip">Çikolata</span>
+              <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">990</span>
+              </span>
+            </div>
+            <a class="btn btn-cta btn-buy" href="index.html#iletisim">Sipariş Ver</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="kombin" data-name="buket çikolata kombin hediye">
+        <article class="product-card" itemscope itemtype="https://schema.org/Product">
+          <div class="product-media">
+            <img src="assets/3.jpg" alt="Buket ve çikolata kombin" loading="lazy" itemprop="image">
+          </div>
+          <div class="product-body">
+            <h3 class="product-title" itemprop="name">Buket + Çikolata Kombin</h3>
+            <p class="product-desc" itemprop="description">En çok tercih edilen ikili. Premium görünüm.</p>
+            <div class="product-meta">
+              <span class="chip">Kombin</span>
+              <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1890</span>
+              </span>
+            </div>
+            <a class="btn btn-cta btn-buy" href="index.html#iletisim">Sipariş Ver</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cicek" data-name="orkide beyaz saksı çiçeği">
+        <article class="product-card" itemscope itemtype="https://schema.org/Product">
+          <div class="product-media">
+            <img src="assets/4.jpg" alt="Beyaz orkide saksı" loading="lazy" itemprop="image">
+          </div>
+          <div class="product-body">
+            <h3 class="product-title" itemprop="name">Beyaz Orkide (Saksı)</h3>
+            <p class="product-desc" itemprop="description">Zarif, modern ve uzun ömürlü.</p>
+            <div class="product-meta">
+              <span class="chip">Çiçek</span>
+              <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1490</span>
+              </span>
+            </div>
+            <a class="btn btn-cta btn-buy" href="index.html#iletisim">Sipariş Ver</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Daha fazlasını kopyalayıp data-cat + data-name değiştir -->
+    </div>
+  </main>
+
+  <footer>
+    <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+      <div>© <span id="year"></span> Cem Çiçek & Çikolata</div>
+      <div style="opacity:.75">Filtre • Arama • Hızlı sipariş</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $('#year').text(new Date().getFullYear());
+
+    // Category filter
+    const $buttons = $('.cat-btn');
+    const $items = $('.product-item');
+    const $search = $('#searchInput');
+
+    function setActive(btn){
+      $buttons.removeClass('active');
+      $(btn).addClass('active');
+    }
+
+    function applyFilter(){
+      const activeCat = $('.cat-btn.active').data('filter');
+      const q = ($search.val() || '').toLowerCase().trim();
+
+      $items.each(function(){
+        const cat = $(this).data('cat');
+        const name = (($(this).data('name') || '') + '').toLowerCase();
+        const passCat = (activeCat === 'all') || (cat === activeCat);
+        const passSearch = !q || name.includes(q);
+        $(this).toggle(passCat && passSearch);
+      });
+    }
+
+    $buttons.on('click', function(){
+      setActive(this);
+      applyFilter();
+    });
+
+    $search.on('input', function(){
+      applyFilter();
+    });
+
+    // Scroll reveal animations
+    (function(){
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    })();
+  </script>
+</body>
+</html>
