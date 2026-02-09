@@ -17,801 +17,822 @@
   <meta property="og:locale" content="tr_TR" />
   <meta property="og:url" content="https://example.com/" />
   <meta property="og:image" content="https://example.com/assets/og.jpg" />
+  <meta name="theme-color" content="#F6FFF6" />
 
-  <meta name="theme-color" content="#0B0F14" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-  <!-- Bootstrap 4.6 + jQuery -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+
+  <!-- Apple-ish font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#0B0F14;
-      --panel:#0F1621;
-      --card:#0E1520;
-      --text:#EAF2FF;
-      --muted:#A7B4C8;
-      --brand:#FF3B7A;
-      --brand2:#7C5CFF;
-      --line:rgba(255,255,255,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
-      --campaignH: 40px;
-      --navH: 64px;
-    }
-    html,body{ background:var(--bg); color:var(--text); scroll-behavior:smooth; }
-    body{ padding-top:0 !important; }
-    a{ color:inherit; }
-    .container{ max-width: 1020px; }
+      --bg:#F6FFF6;            /* very light green */
+      --surface:#FFFFFF;       /* white */
+      --surface2:#F2FBF2;      /* subtle green */
+      --text:#0A0F0A;          /* near black */
+      --muted:#5E6B5E;         /* muted */
+      --line:rgba(10,15,10,.10);
 
-    /* Campaign (fixed 40px) */
-    .campaign-bar{
-      position:fixed; top:0; left:0; right:0;
-      height:var(--campaignH);
-      z-index:9999;
-      background: linear-gradient(90deg, var(--brand), var(--brand2));
-      color:#fff;
-      font-weight:800;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    .campaign-bar .inner{
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:.6rem;
-    }
-    .campaign-badge{
-      border:1px solid rgba(255,255,255,.26);
-      background: rgba(0,0,0,.22);
-      border-radius: 999px;
-      padding:.18rem .6rem;
-      font-size:.82rem;
-      white-space:nowrap;
-    }
-    .campaign-close{
-      width:38px; height:38px;
-      border-radius:12px;
-      border:0;
-      background: transparent;
-      color:#fff;
-      display:flex; align-items:center; justify-content:center;
-      transition:.2s transform ease, .2s background ease;
-    }
-    .campaign-close:hover{ background: rgba(255,255,255,.14); }
-    .campaign-close:active{ transform: scale(.96); }
+      --mint:#2ECC71;          /* accent mint */
+      --mint2:#22C55E;         /* accent alt */
+      --mintSoft: rgba(46,204,113,.14);
 
-    /* Navbar (fixed under campaign) */
-    .top-nav{
-      position:fixed;
-      top: var(--campaignH);
-      left:0; right:0;
-      z-index:9998;
+      --shadow: 0 18px 55px rgba(10,15,10,.08);
+      --shadow2: 0 10px 28px rgba(10,15,10,.08);
+      --radius: 20px;
+
+      --navH: 72px;
+      --heroH: 100vh;          /* full */
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior:smooth;
+    }
+    a{ color: inherit; text-decoration:none; }
+    a:hover{ text-decoration:none; }
+
+    /* Layout helpers */
+    .container-xl{ max-width: 1200px; }
+    .section{ padding: 4.2rem 0; }
+    @media (max-width: 768px){
+      .section{ padding: 3.2rem 0; }
+    }
+
+    /* ===== HEADER (XL) ===== */
+    .site-header{
+      position: sticky;
+      top:0;
+      z-index: 9999;
       height: var(--navH);
-      background: rgba(11,15,20,.62);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
       display:flex;
       align-items:center;
+      background: rgba(246,255,246,.72);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(10,15,10,.08);
     }
-    .brandmark{
-      width:34px; height:34px; border-radius:12px;
-      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 55%),
-                  linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: 0 10px 25px rgba(255,59,122,.25);
+    .brand{
+      display:flex; align-items:center; gap:.7rem;
+      font-weight: 900;
+      letter-spacing: -.3px;
     }
-    .navbar-dark .navbar-brand{ font-weight:900; letter-spacing:.2px; }
-    .nav-link{ color: rgba(234,242,255,.86)!important; font-weight:700; }
-    .nav-link:hover{ color:#fff!important; }
-    .btn-cta{
-      background: linear-gradient(90deg, var(--brand), var(--brand2));
-      border:0;
-      color:#fff;
-      font-weight:900;
+    .logo{
+      width: 38px; height: 38px;
       border-radius: 14px;
-      padding:.55rem .85rem;
-      box-shadow: 0 16px 45px rgba(124,92,255,.22);
+      background:
+        radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 55%),
+        linear-gradient(135deg, var(--mint), #9AE6B4);
+      box-shadow: 0 12px 28px rgba(34,197,94,.20);
+      border: 1px solid rgba(10,15,10,.06);
+    }
+    .nav-link{
+      color: rgba(10,15,10,.74)!important;
+      font-weight: 700;
+      padding: .5rem .8rem !important;
+      border-radius: 999px;
+      transition: .18s background ease, .18s color ease;
+    }
+    .nav-link:hover{
+      background: rgba(34,197,94,.10);
+      color: rgba(10,15,10,.92)!important;
+    }
+    .btn-cta{
+      border: 0;
+      font-weight: 900;
+      border-radius: 999px;
+      padding: .58rem .92rem;
+      color: #0A0F0A;
+      background: linear-gradient(180deg, #B9F6CA, #7EE8A8);
+      box-shadow: 0 14px 32px rgba(34,197,94,.16);
+      transition: .18s transform ease;
     }
     .btn-cta:active{ transform: translateY(1px); }
-    .btn-soft{
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      color:#fff;
-      font-weight:900;
-      border-radius: 14px;
-      padding:.55rem .85rem;
+    .btn-ghost{
+      border: 1px solid rgba(10,15,10,.14);
+      background: rgba(255,255,255,.60);
+      font-weight: 900;
+      border-radius: 999px;
+      padding: .58rem .92rem;
+      color: rgba(10,15,10,.90);
     }
+    .navbar-toggler{
+      border:1px solid rgba(10,15,10,.14)!important;
+      border-radius: 14px!important;
+      padding: .35rem .55rem!important;
+    }
+    .navbar-dark .navbar-toggler-icon{ filter: invert(1) grayscale(1) contrast(2); }
+    .navbar{ padding:0; }
 
-    /* Hero (exactly under bars, NOT low) */
+    /* ===== HERO (FULL WIDTH FLUID) ===== */
     .hero{
-      margin-top: calc(var(--campaignH) + var(--navH));
-      height: calc(100vh - (var(--campaignH) + var(--navH)));
-      min-height: 560px;
-      border-bottom: 1px solid var(--line);
+      position: relative;
+      width: 100%;
+      height: var(--heroH);
+      min-height: 680px;
+      overflow: hidden;
+      background: #EFFFF0;
     }
-    .hero-carousel,
-    .hero-carousel .carousel-inner,
-    .hero-carousel .carousel-item{ height:100%; }
-    .hero-img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-      filter: saturate(1.05) contrast(1.03);
+    .hero-media{
+      position:absolute; inset:0;
+      background: url('assets/banner.jpg') center/cover no-repeat;
+      transform: scale(1.03);
+      filter: saturate(1.04) contrast(1.02);
     }
-    .hero .carousel-item::before{
-      content:"";
+    .hero-overlay{
       position:absolute; inset:0;
       background:
-        radial-gradient(circle at 20% 30%, rgba(255,59,122,.28), transparent 55%),
-        radial-gradient(circle at 75% 30%, rgba(124,92,255,.24), transparent 60%),
-        linear-gradient(0deg, rgba(11,15,20,.78), rgba(11,15,20,.28));
-      pointer-events:none;
+        radial-gradient(circle at 20% 20%, rgba(46,204,113,.22), transparent 55%),
+        radial-gradient(circle at 80% 25%, rgba(34,197,94,.18), transparent 60%),
+        linear-gradient(180deg, rgba(246,255,246,.10), rgba(246,255,246,.92) 70%, rgba(246,255,246,1));
     }
-    .hero-caption{
-      text-align:left;
-      left: 7%;
-      right: 7%;
-      bottom: 12%;
-      position:absolute;
-      z-index:2;
+    .hero-inner{
+      position: relative;
+      height: 100%;
+      display:flex;
+      align-items:center;
     }
-    .kicker{
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 2.2rem;
+      align-items: center;
+      width:100%;
+    }
+    @media (max-width: 992px){
+      .hero{ min-height: 720px; }
+      .hero-grid{ grid-template-columns: 1fr; gap: 1.6rem; padding-top: 1.2rem; }
+    }
+
+    .chip{
       display:inline-flex; align-items:center; gap:.5rem;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      padding:.35rem .7rem;
+      padding: .35rem .7rem;
       border-radius: 999px;
-      color: rgba(234,242,255,.92);
-      font-weight:800;
-      font-size: .88rem;
+      font-weight: 800;
+      background: rgba(255,255,255,.66);
+      border: 1px solid rgba(10,15,10,.10);
+      color: rgba(10,15,10,.82);
+      box-shadow: var(--shadow2);
+      width: fit-content;
     }
-    .kdot{ width:8px; height:8px; border-radius:50%; background:#fff; box-shadow: 0 0 0 6px rgba(255,255,255,.08); }
-    .hero-title{
-      font-size: clamp(1.9rem, 5.2vw, 3.0rem);
+    .dot{
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--mint2);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+    }
+    .hero h1{
       font-weight: 950;
-      letter-spacing: -.7px;
-      margin: .85rem 0 .65rem;
+      letter-spacing: -1.0px;
+      font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+      line-height: 1.05;
+      margin: 1.0rem 0 .85rem;
     }
-    .hero-sub{
-      color: rgba(234,242,255,.80);
-      font-size: 1.05rem;
-      line-height: 1.55;
-      max-width: 52ch;
-      margin-bottom: 1.0rem;
+    .hero p{
+      color: rgba(10,15,10,.68);
+      font-size: 1.08rem;
+      line-height: 1.7;
+      max-width: 54ch;
+      margin: 0 0 1.1rem;
     }
-    .hero-actions{ display:flex; flex-wrap:wrap; gap:.6rem; }
-    .hero-badges{ margin-top: 1.05rem; display:flex; flex-wrap:wrap; gap:.45rem; }
-    .pill{
-      font-weight:800;
-      color: rgba(234,242,255,.86);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      padding:.35rem .65rem;
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:.6rem;
+      align-items:center;
+    }
+    .hero-bullets{
+      display:flex; flex-wrap:wrap;
+      gap: .45rem;
+      margin-top: 1.0rem;
+    }
+    .bullet{
+      font-weight: 800;
+      color: rgba(10,15,10,.74);
+      border: 1px solid rgba(10,15,10,.10);
+      background: rgba(255,255,255,.62);
+      padding: .35rem .62rem;
       border-radius: 999px;
-      font-size:.86rem;
     }
 
-    /* Category quick bar (like marketplace style) */
-    .quick-cats{
-      position: sticky;
-      top: calc(var(--campaignH) + var(--navH));
-      z-index: 990;
-      background: rgba(11,15,20,.72);
+    /* Hero side card (Apple-ish) */
+    .hero-card{
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(10,15,10,.10);
+      border-radius: 26px;
+      padding: 1.1rem;
+      box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
     }
-    .quick-cats .wrap{
-      display:flex; gap:.55rem; overflow:auto;
-      padding: .75rem 0;
-      -webkit-overflow-scrolling: touch;
-    }
-    .cat-pill{
-      white-space: nowrap;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,242,255,.90);
-      padding:.45rem .75rem;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size:.92rem;
-      transition: .2s transform ease, .2s background ease, .2s border-color ease;
-    }
-    .cat-pill.active{
-      background: linear-gradient(90deg, rgba(255,59,122,.9), rgba(124,92,255,.9));
-      border-color: rgba(255,255,255,.26);
-    }
-    .cat-pill:active{ transform: scale(.98); }
-
-    /* Sections */
-    section{ padding: 2.1rem 0; }
-    .section-title{
+    .hero-card h3{
       font-weight: 950;
-      letter-spacing: -.45px;
-      margin-bottom:.35rem;
+      letter-spacing:-.4px;
+      margin:0 0 .35rem;
     }
-    .section-sub{
-      color: var(--muted);
-      margin-bottom: 1.2rem;
+    .hero-card p{
+      margin:0 0 .9rem;
+      color: rgba(10,15,10,.62);
+      font-size: .98rem;
+      line-height: 1.55;
     }
-    .hr-soft{ border-color: rgba(255,255,255,.10); }
+    .mini-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+    }
+    @media (max-width: 420px){
+      .mini-row{ grid-template-columns: 1fr; }
+    }
+    .mini{
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(46,204,113,.10), rgba(255,255,255,.64));
+      border:1px solid rgba(10,15,10,.08);
+      padding: .85rem .85rem;
+      transition: .2s transform ease, .2s box-shadow ease;
+    }
+    .mini:hover{ transform: translateY(-3px); box-shadow: 0 16px 32px rgba(10,15,10,.08); }
+    .mini b{ display:block; font-weight: 950; margin-bottom:.15rem; }
+    .mini span{ color: rgba(10,15,10,.62); font-weight:700; font-size:.92rem; }
+
+    /* ===== SECTIONS (XL) ===== */
+    .title{
+      font-weight: 950;
+      letter-spacing:-.6px;
+      font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+      margin:0 0 .35rem;
+    }
+    .subtitle{
+      color: rgba(10,15,10,.62);
+      margin:0 0 1.35rem;
+      line-height:1.65;
+      max-width: 72ch;
+    }
 
     /* Feature cards */
-    .feature{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border-radius: var(--radius);
-      box-shadow: 0 10px 40px rgba(0,0,0,.28);
-      padding: 1rem;
-      height: 100%;
-      transition: .25s transform ease, .25s border-color ease;
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
     }
-    .feature:hover{ transform: translateY(-4px); border-color: rgba(255,255,255,.18); }
-    .feature .icon{
-      width:44px; height:44px; border-radius: 16px;
+    @media (max-width: 992px){ .grid-3{ grid-template-columns: 1fr; } }
+
+    .card-soft{
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(10,15,10,.10);
+      border-radius: 26px;
+      padding: 1.1rem;
+      box-shadow: var(--shadow2);
+      transition: .22s transform ease, .22s box-shadow ease;
+    }
+    .card-soft:hover{ transform: translateY(-4px); box-shadow: var(--shadow); }
+    .icon{
+      width: 46px; height: 46px;
+      border-radius: 18px;
       display:flex; align-items:center; justify-content:center;
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      margin-bottom:.8rem;
+      background: rgba(46,204,113,.14);
+      border: 1px solid rgba(34,197,94,.18);
       font-size: 20px;
+      margin-bottom: .75rem;
     }
-    .feature h3{ font-weight:950; font-size: 1.05rem; margin-bottom:.35rem; }
-    .feature p{ color: var(--muted); margin:0; }
+    .card-soft h3{
+      font-weight: 950;
+      letter-spacing:-.3px;
+      margin:0 0 .35rem;
+      font-size: 1.05rem;
+    }
+    .card-soft p{ margin:0; color: rgba(10,15,10,.62); line-height:1.6; }
 
     /* Products */
-    .tools-row{ gap:.6rem; }
-    .searchbox{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      border-radius: 16px;
-      padding: .65rem .85rem;
-      color: var(--text);
-      outline: none;
-      width: 100%;
+    .tools{
+      display:flex; flex-wrap:wrap;
+      gap:.6rem;
+      align-items:center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
     }
-    .searchbox::placeholder{ color: rgba(234,242,255,.55); }
+    .filters{
+      display:flex; flex-wrap:wrap; gap:.45rem;
+      align-items:center;
+    }
+    .filter{
+      border: 1px solid rgba(10,15,10,.12);
+      background: rgba(255,255,255,.70);
+      border-radius: 999px;
+      padding: .42rem .75rem;
+      font-weight: 900;
+      color: rgba(10,15,10,.74);
+      transition: .18s background ease, .18s transform ease;
+    }
+    .filter.active{
+      background: linear-gradient(180deg, #B9F6CA, #7EE8A8);
+      border-color: rgba(10,15,10,.12);
+      color: rgba(10,15,10,.90);
+    }
+    .filter:active{ transform: scale(.98); }
 
-    .product-card{
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.12);
-      background: radial-gradient(circle at 20% 10%, rgba(255,59,122,.14), transparent 45%),
-                  radial-gradient(circle at 80% 10%, rgba(124,92,255,.14), transparent 55%),
-                  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
+    .search{
+      width: min(360px, 100%);
+      border-radius: 999px;
+      padding: .62rem .95rem;
+      border: 1px solid rgba(10,15,10,.12);
+      background: rgba(255,255,255,.76);
+      outline:none;
+      font-weight: 700;
+      color: rgba(10,15,10,.86);
+    }
+    .search::placeholder{ color: rgba(10,15,10,.42); }
+
+    .products{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 992px){ .products{ grid-template-columns: 1fr; } }
+
+    .p-card{
+      border-radius: 28px;
       overflow:hidden;
-      position:relative;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(10,15,10,.10);
+      box-shadow: var(--shadow2);
+      transition: .24s transform ease, .24s box-shadow ease;
       height:100%;
-      transition: .25s transform ease, .25s border-color ease, .25s box-shadow ease;
-      transform: translateY(0);
+      display:flex;
+      flex-direction:column;
     }
-    .product-card:hover{
-      transform: translateY(-6px);
-      border-color: rgba(255,255,255,.22);
-      box-shadow: 0 22px 70px rgba(0,0,0,.55);
-    }
-    .product-media{
-      height: 180px;
-      background: linear-gradient(135deg, rgba(255,59,122,.28), rgba(124,92,255,.22));
+    .p-card:hover{ transform: translateY(-6px); box-shadow: var(--shadow); }
+    .p-media{
+      height: 190px;
+      background: linear-gradient(135deg, rgba(46,204,113,.16), rgba(255,255,255,.6));
+      position:relative;
       overflow:hidden;
     }
-    .product-media img{
+    .p-media img{
       width:100%; height:100%;
       object-fit:cover;
       transform: scale(1.06);
       transition: .35s transform ease;
     }
-    .product-card:hover .product-media img{ transform: scale(1.12); }
-    .product-body{ padding: 1rem 1rem .95rem; }
-    .product-title{ font-weight: 950; margin:0 0 .35rem; font-size: 1.05rem; }
-    .product-desc{ color: var(--muted); margin:0 0 .85rem; line-height:1.45; min-height: 44px; }
-    .product-meta{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; }
-    .price{ font-weight: 950; font-size: 1.05rem; letter-spacing: -.2px; }
-    .chip{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      padding:.32rem .6rem;
-      border-radius: 999px;
-      color: rgba(234,242,255,.9);
+    .p-card:hover .p-media img{ transform: scale(1.12); }
+    .p-body{ padding: 1.0rem 1.05rem 1.05rem; display:flex; flex-direction:column; flex:1; }
+    .p-title{ font-weight: 950; letter-spacing:-.3px; margin:0 0 .35rem; font-size: 1.05rem; }
+    .p-desc{ color: rgba(10,15,10,.60); margin:0 0 .9rem; line-height:1.55; min-height: 44px; }
+    .p-meta{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-top:auto; }
+    .tag{
+      border: 1px solid rgba(10,15,10,.10);
+      background: rgba(46,204,113,.12);
+      color: rgba(10,15,10,.74);
       font-weight: 900;
+      border-radius: 999px;
+      padding: .28rem .6rem;
       font-size: .82rem;
       white-space:nowrap;
     }
-    .btn-buy{ width:100%; margin-top:.9rem; border-radius: 14px; font-weight: 950; }
-
-    /* CTA Band */
-    .cta-band{
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(90deg, rgba(255,59,122,.18), rgba(124,92,255,.16));
-      border-radius: 24px;
-      padding: 1rem;
-      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    .price{ font-weight: 950; letter-spacing:-.2px; }
+    .p-btn{
+      margin-top: .85rem;
+      width: 100%;
+      border-radius: 16px;
+      padding: .62rem .9rem;
+      border: 1px solid rgba(10,15,10,.10);
+      background: rgba(255,255,255,.80);
+      font-weight: 950;
+      color: rgba(10,15,10,.86);
+      transition: .18s transform ease, .18s background ease;
     }
+    .p-btn:hover{ background: rgba(46,204,113,.14); }
+    .p-btn:active{ transform: translateY(1px); }
 
     /* Contact */
-    .contact-card{
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border-radius: 22px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.4);
-      padding: 1rem;
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
     }
-    .contact-item{
+    @media (max-width: 992px){ .contact{ grid-template-columns: 1fr; } }
+    .contact-block{
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(10,15,10,.10);
+      border-radius: 28px;
+      padding: 1.1rem;
+      box-shadow: var(--shadow2);
+    }
+    .item{
       display:flex; gap:.75rem; align-items:flex-start;
-      padding:.8rem .75rem;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
+      padding: .85rem .85rem;
+      border-radius: 22px;
+      background: rgba(46,204,113,.10);
+      border: 1px solid rgba(10,15,10,.08);
+      margin-bottom: .65rem;
     }
-    .contact-item b{ display:block; }
-    .contact-item span{ color: var(--muted); display:block; margin-top:.1rem; }
+    .item b{ display:block; font-weight: 950; }
+    .item span{ display:block; color: rgba(10,15,10,.62); margin-top:.1rem; font-weight:700; }
 
+    .form-control{
+      border-radius: 18px;
+      border: 1px solid rgba(10,15,10,.12);
+      background: rgba(255,255,255,.78);
+      padding: .7rem .85rem;
+      font-weight: 700;
+      color: rgba(10,15,10,.86);
+    }
+    .form-control:focus{
+      border-color: rgba(34,197,94,.35);
+      box-shadow: 0 0 0 .22rem rgba(34,197,94,.14);
+    }
+    label{ font-weight: 900; color: rgba(10,15,10,.78); }
+
+    /* Footer */
     footer{
-      border-top:1px solid var(--line);
-      padding: 1.4rem 0 2.4rem;
-      color: rgba(234,242,255,.70);
+      padding: 2.2rem 0 3.0rem;
+      border-top: 1px solid rgba(10,15,10,.08);
+      color: rgba(10,15,10,.60);
     }
 
     /* Reveal */
-    .reveal{
-      opacity:0;
-      transform: translateY(18px);
-      transition: .7s opacity ease, .7s transform cubic-bezier(.2,.9,.2,1);
-      will-change: opacity, transform;
-    }
-    .reveal.is-visible{
-      opacity:1;
-      transform: translateY(0);
-    }
+    .reveal{ opacity:0; transform: translateY(14px); transition: .7s opacity ease, .7s transform cubic-bezier(.2,.9,.2,1); }
+    .reveal.is-visible{ opacity:1; transform: translateY(0); }
+.wa-bubble {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 64px;
+  height: 64px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,.25);
+  z-index: 9999;
+  transition: transform .2s ease;
+}
 
-    /* WhatsApp floating button */
-    .wa-fab{
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 9999;
-      border-radius: 999px;
-      padding: .75rem 1rem;
-      font-weight: 950;
-      border:1px solid rgba(255,255,255,.18);
-      background: linear-gradient(90deg, rgba(25, 209, 105, .92), rgba(124,92,255,.65));
-      color: #fff;
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      display:flex; align-items:center; gap:.55rem;
-      text-decoration:none;
-    }
-    .wa-fab:active{ transform: translateY(1px); }
+.wa-bubble:hover {
+  transform: scale(1.1);
+}
 
-    /* Small screens tweaks */
-    @media (max-width: 991px){
-      :root{ --navH: 62px; }
-      .hero{ min-height: 520px; }
-    }
+.wa-bubble:active {
+  transform: scale(0.95);
+}
   </style>
 
-  <!-- JSON-LD LocalBusiness / Florist -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Florist",
     "name":"Cem Çiçekçilik & Çikolata",
     "telephone":"+905398299590",
-    "url":"https://example.com/",
     "address":{"@type":"PostalAddress","addressLocality":"Mersin","addressCountry":"TR"},
-    "priceRange":"₺₺",
-    "sameAs":[]
+    "url":"https://example.com/",
+    "priceRange":"₺₺"
   }
   </script>
 </head>
 
 <body>
-  <!-- Campaign Bar -->
-  <div class="campaign-bar">
-    <div class="container">
-      <div class="inner">
-        <div class="d-flex align-items-center" style="gap:.55rem;">
-          <span class="campaign-badge">KAMPANYA</span>
-          <small class="font-weight-bold">Bugüne özel <b>%20</b> indirim • Aynı gün teslimat</small>
+  <!-- HEADER (XL container) -->
+  <header class="site-header">
+    <div class="container container-xl">
+      <nav class="navbar navbar-expand-lg">
+       <a class="brand navbar-brand p-0 m-0" href="#top" aria-label="Ana sayfa">
+          <!-- PNG/SVG logo -->
+          <img style="width: 150px;" src="assets/CEM ÇİÇEKÇİLİK (150 x 80 piksel) (1).png" alt="Cem Çiçekçilik & Çikolata Logo" class="brand-logo" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav"
+                aria-controls="nav" aria-expanded="false" aria-label="Menü">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ml-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#urunler">Ürünler</a></li>
+            <li class="nav-item"><a class="nav-link" href="#hizmetler">Hizmetler</a></li>
+            <li class="nav-item"><a class="nav-link" href="#hakkimizda">Hakkımızda</a></li>
+            <li class="nav-item"><a class="nav-link" href="#iletisim">İletişim</a></li>
+            <li class="nav-item ml-lg-2 mt-2 mt-lg-0">
+              <a class="btn btn-cta btn-sm" href="#urunler">Siparişe Başla</a>
+            </li>
+            <li class="nav-item ml-lg-2 mt-2 mt-lg-0">
+              <a class="btn btn-ghost btn-sm" href="#iletisim">WhatsApp</a>
+            </li>
+          </ul>
         </div>
-        <button class="campaign-close" id="campaignClose" aria-label="Kampanyayı kapat">✕</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark top-nav">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#top" aria-label="Cem Çiçekçilik ana sayfa">
-        <span class="brandmark mr-2" aria-hidden="true"></span>
-        Cem Çiçekçilik & Çikolata
-      </a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav"
-              aria-controls="nav" aria-expanded="false" aria-label="Menüyü aç/kapat">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ml-auto align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="#urunler">Ürünler</a></li>
-          <li class="nav-item"><a class="nav-link" href="#hizmetler">Hizmetler</a></li>
-          <li class="nav-item"><a class="nav-link" href="#hakkimizda">Hakkımızda</a></li>
-          <li class="nav-item"><a class="nav-link" href="#iletisim">İletişim</a></li>
-          <li class="nav-item mt-2 mt-lg-0 ml-lg-2">
-            <a class="btn btn-cta btn-sm" href="#urunler">Hemen İncele</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO (Not low, perfectly aligned) -->
-  <header id="top" class="hero">
-    <div id="heroCarousel" class="carousel slide hero-carousel" data-ride="carousel" data-interval="4500">
-      <ol class="carousel-indicators">
-        <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#heroCarousel" data-slide-to="1"></li>
-        <li data-target="#heroCarousel" data-slide-to="2"></li>
-      </ol>
-
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="hero-img" src="assets/hero-1.jpg" alt="Cem Çiçekçilik & Çikolata mağaza banner">
-          <div class="hero-caption">
-            <span class="kicker"><span class="kdot"></span> Mersin • Çiçek • Çikolata</span>
-            <div class="hero-title">Şık çiçekler, premium çikolatalar<br/>tek adreste.</div>
-            <div class="hero-sub">Aynı gün teslimat, kişiye özel not ve özenli paketleme ile hediye deneyimini yükselt.</div>
-            <div class="hero-actions">
-              <a class="btn btn-cta" href="#urunler">Ürünleri Gör</a>
-              <a class="btn btn-soft" href="#iletisim">WhatsApp Sipariş</a>
-            </div>
-            <div class="hero-badges">
-              <span class="pill">Aynı gün teslimat</span>
-              <span class="pill">Kişiye özel not</span>
-              <span class="pill">Kurumsal sipariş</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img class="hero-img" src="assets/hero-2.jpg" alt="Çiçek buketleri ve aranjmanlar">
-          <div class="hero-caption">
-            <span class="kicker"><span class="kdot"></span> Buket • Aranjman • Saksı</span>
-            <div class="hero-title">Çiçek koleksiyonu<br/>modern ve canlı.</div>
-            <div class="hero-sub">Gül, orkide, mevsim çiçekleri. Her bütçeye premium görünüm.</div>
-            <div class="hero-actions">
-              <a class="btn btn-cta" href="#urunler" data-category="cicek">Çiçekleri İncele</a>
-              <a class="btn btn-soft" href="#hizmetler">Hizmetler</a>
-            </div>
-            <div class="hero-badges">
-              <span class="pill">Şık paketleme</span>
-              <span class="pill">Hızlı hazırlık</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <img class="hero-img" src="assets/hero-3.jpg" alt="Kutuda premium çikolata">
-          <div class="hero-caption">
-            <span class="kicker"><span class="kdot"></span> Kutuda Çikolata</span>
-            <div class="hero-title">Çikolata kutuları<br/>lüks ve özenli.</div>
-            <div class="hero-sub">Bitter, sütlü ve karışık seçeneklerle hediyeyi tamamla.</div>
-            <div class="hero-actions">
-              <a class="btn btn-cta" href="#urunler" data-category="cikolata">Çikolatalar</a>
-              <a class="btn btn-soft" href="#iletisim">Hızlı Sipariş</a>
-            </div>
-            <div class="hero-badges">
-              <span class="pill">Premium kutu</span>
-              <span class="pill">Hediye notu</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev" aria-label="Önceki">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      </a>
-      <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next" aria-label="Sonraki">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      </a>
+      </nav>
     </div>
   </header>
 
-  <!-- Quick categories bar -->
-  <div class="quick-cats">
-    <div class="container">
-      <div class="wrap">
-        <button class="cat-pill active" type="button" data-filter="all">Tümü</button>
-        <button class="cat-pill" type="button" data-filter="cicek">Çiçek</button>
-        <button class="cat-pill" type="button" data-filter="cikolata">Çikolata</button>
-        <button class="cat-pill" type="button" data-filter="kombin">Kombin</button>
-        <a class="cat-pill" href="#iletisim" style="text-decoration:none;">Hızlı Sipariş</a>
+  <!-- HERO (FULL WIDTH FLUID, single banner) -->
+  <main id="top">
+    <section class="hero" aria-label="Banner">
+      <div class="hero-media" role="img" aria-label="Cem Çiçekçilik banner görseli"></div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-inner">
+        <div class="container-fluid px-3 px-md-4">
+          <div class="container container-xl">
+            <div class="hero-grid">
+              <div class="reveal">
+                <div class="chip"><span class="dot"></span> Mersin • Çiçek • Çikolata • Aynı Gün Teslimat</div>
+                <h1>Cem Çiçek Çikolata<br/>sade & premium<br/>Buket</h1>
+                <p>
+                  Cem Çiçekçilik & Çikolata’da modern buketler, şık aranjmanlar ve premium kutu çikolatalar
+                  tek bir çizgide buluşur. Hızlı sipariş, özenli paketleme, güvenli teslimat.
+                </p>
+                <div class="hero-actions">
+                  <a class="btn btn-cta" href="#urunler">Ürünleri İncele</a>
+                  <a class="btn btn-ghost" href="#iletisim">Hızlı Sipariş</a>
+                </div>
+                <div class="hero-bullets">
+                  <span class="bullet">Kişiye özel not</span>
+                  <span class="bullet">Şık paketleme</span>
+                  <span class="bullet">Kurumsal sipariş</span>
+                </div>
+              </div>
+
+              <aside class="hero-card reveal" aria-label="Hızlı seçenekler">
+                <h3>Hızlı Seçenekler</h3>
+                <p>En çok tercih edilen kategoriler. Tek tıkla filtrele, hızlı siparişe geç.</p>
+
+                <div class="mini-row">
+                  <button class="mini filter-jump" type="button" data-filter="cicek">
+                    <b>Çiçek</b><span>Buket • Aranjman</span>
+                  </button>
+                  <button class="mini filter-jump" type="button" data-filter="cikolata">
+                    <b>Çikolata</b><span>Kutu • Karışık</span>
+                  </button>
+                  <button class="mini filter-jump" type="button" data-filter="kombin">
+                    <b>Kombin</b><span>Çiçek + Çikolata</span>
+                  </button>
+                  <a class="mini" href="#iletisim">
+                    <b>WhatsApp</b><span>Hemen yaz</span>
+                  </a>
+                </div>
+
+                <hr style="border-color: rgba(10,15,10,.08); margin: .95rem 0;" />
+
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:.6rem;">
+                  <div style="font-weight: 950;">Telefon</div>
+                  <a href="tel:+905398299590" style="font-weight:900; color: rgba(10,15,10,.78);">0 539 829 95 90</a>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- Services -->
-  <section id="hizmetler">
-    <div class="container">
-      <h2 class="section-title reveal">Hizmetler</h2>
-      <p class="section-sub reveal">Hızlı, güvenli, şık. Ürünleri aynı gün hazırlayıp teslimat planlıyoruz.</p>
+    <!-- SERVICES (XL) -->
+    <section id="hizmetler" class="section">
+      <div class="container container-xl">
+        <h2 class="title reveal">Hizmetler</h2>
+        <p class="subtitle reveal">Sade, hızlı, güvenli. Apple tarzı temiz bir deneyim: seç, yaz, teslim edelim.</p>
 
-      <div class="row">
-        <div class="col-12 col-md-4 mb-3">
-          <div class="feature reveal">
+        <div class="grid-3">
+          <div class="card-soft reveal">
             <div class="icon">⚡</div>
             <h3>Aynı Gün Hazırlık</h3>
-            <p>Seçtiğin ürünü hızlıca hazırlayıp güvenli paketliyoruz.</p>
+            <p>Seçtiğin ürün hızlı hazırlanır, özenle paketlenir.</p>
           </div>
-        </div>
-        <div class="col-12 col-md-4 mb-3">
-          <div class="feature reveal">
+          <div class="card-soft reveal">
             <div class="icon">🎁</div>
             <h3>Premium Paketleme</h3>
-            <p>Hediye hissini yükselten kutu ve kurdele detayları.</p>
+            <p>Hediye hissi veren kutu ve kurdele detayları.</p>
           </div>
-        </div>
-        <div class="col-12 col-md-4 mb-3">
-          <div class="feature reveal">
+          <div class="card-soft reveal">
             <div class="icon">📝</div>
             <h3>Kişiye Özel Not</h3>
-            <p>Not kartı ve özel isteklerle kişiselleştir.</p>
+            <p>Not kartı, renk tercihi ve özel istekler eklenir.</p>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="cta-band mt-2 reveal">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between" style="gap:.8rem;">
-          <div>
-            <div class="font-weight-bold" style="font-size:1.05rem;">WhatsApp’tan hızlı sipariş</div>
-            <div class="muted">Ürün adını yaz, adresi gönder, biz hazırlayıp teslim edelim.</div>
+    <!-- PRODUCTS (XL) -->
+    <section id="urunler" class="section" style="padding-top: 0;">
+      <div class="container container-xl">
+        <h2 class="title reveal">Ürünler</h2>
+        <p class="subtitle reveal">Filtrele veya ara. Kartlar minimal, temiz ve premium hisli.</p>
+
+        <div class="tools">
+          <div class="filters reveal" role="tablist" aria-label="Ürün kategorileri">
+            <button class="filter active" type="button" data-filter="all">Tümü</button>
+            <button class="filter" type="button" data-filter="cicek">Çiçek</button>
+            <button class="filter" type="button" data-filter="cikolata">Çikolata</button>
+            <button class="filter" type="button" data-filter="kombin">Kombin</button>
           </div>
-          <a class="btn btn-cta" href="#iletisim">Siparişe Geç</a>
+          <input id="searchInput" class="search reveal" placeholder="Ara: gül, orkide, bitter..." aria-label="Ürün ara" />
         </div>
-      </div>
-    </div>
-  </section>
 
-  <hr class="hr-soft m-0" />
-
-  <!-- Products -->
-  <section id="urunler">
-    <div class="container">
-      <h2 class="section-title reveal">Ürünler</h2>
-      <p class="section-sub reveal">Kategori seç veya ara. Kartlar premium görünüm + animasyonlu.</p>
-
-      <div class="row align-items-center tools-row">
-        <div class="col-12 col-md-6 mb-2 mb-md-0 reveal">
-          <input id="searchInput" class="searchbox" placeholder="Ürün ara: gül, orkide, bitter..." aria-label="Ürün ara" />
-        </div>
-        <div class="col-12 col-md-6 text-md-right reveal">
-          <small class="muted">* Fiyatlar örnek. Ürünleri çoğaltıp güncelleyebilirsin.</small>
-        </div>
-      </div>
-
-      <div class="row mt-3" id="productGrid">
-        <!-- 1 -->
-        <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cicek" data-name="kırmızı gül buketi gül">
-          <article class="product-card" itemscope itemtype="https://schema.org/Product">
-            <div class="product-media">
-              <img src="assets/p1.jpg" alt="Kırmızı gül buketi" loading="lazy" itemprop="image">
+        <div class="products" id="productGrid">
+          <!-- 1 -->
+          <article class="p-card product-item reveal" data-cat="cicek" data-name="kırmızı gül buketi gül">
+            <div class="p-media">
+              <img src="assets/11.jpeg" alt="Kırmızı gül buketi" loading="lazy">
             </div>
-            <div class="product-body">
-              <h3 class="product-title" itemprop="name">Kırmızı Gül Buketi</h3>
-              <p class="product-desc" itemprop="description">Şık kurdele, canlı güller, premium paket. (12/24/36)</p>
-              <div class="product-meta">
-                <span class="chip">Çiçek</span>
-                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                  <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1290</span>
-                </span>
+            <div class="p-body">
+              <h3 class="p-title">Kırmızı Gül Buketi</h3>
+              <p class="p-desc">Şık kurdele, canlı güller, premium paket. (12/24/36 seçenek)</p>
+              <div class="p-meta">
+                <span class="tag">Çiçek</span>
+        
               </div>
-              <button class="btn btn-cta btn-buy order-btn" data-product="Kırmızı Gül Buketi">Sipariş Ver</button>
+              <button class="p-btn order-btn" data-product="Kırmızı Gül Buketi">WhatsApp’tan Sipariş</button>
             </div>
           </article>
-        </div>
 
-        <!-- 2 -->
-        <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cikolata" data-name="gold kutu karışık çikolata bitter sütlü">
-          <article class="product-card" itemscope itemtype="https://schema.org/Product">
-            <div class="product-media">
-              <img src="assets/p2.jpg" alt="Gold kutu karışık çikolata" loading="lazy" itemprop="image">
+          <!-- 2 -->
+          <article class="p-card product-item reveal" data-cat="cikolata" data-name="gold kutu karışık çikolata bitter sütlü">
+            <div class="p-media">
+              <img src="assets/14.jpeg" alt="Gold kutu karışık çikolata" loading="lazy">
             </div>
-            <div class="product-body">
-              <h3 class="product-title" itemprop="name">Gold Kutu Karışık Çikolata</h3>
-              <p class="product-desc" itemprop="description">Bitter + sütlü karışım, hediye notu dahil.</p>
-              <div class="product-meta">
-                <span class="chip">Çikolata</span>
-                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                  <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">990</span>
-                </span>
+            <div class="p-body">
+              <h3 class="p-title">Kutu Gül Karışık Çikolata</h3>
+              <p class="p-desc">Bitter + sütlü karışım. Hediye notu dahil, premium kutu.</p>
+              <div class="p-meta">
+                <span class="tag">Çikolata</span>
+ 
               </div>
-              <button class="btn btn-cta btn-buy order-btn" data-product="Gold Kutu Karışık Çikolata">Sipariş Ver</button>
+              <button class="p-btn order-btn" data-product="Gold Kutu Karışık">WhatsApp’tan Sipariş</button>
             </div>
           </article>
-        </div>
 
-        <!-- 3 -->
-        <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="kombin" data-name="buket çikolata kombin hediye">
-          <article class="product-card" itemscope itemtype="https://schema.org/Product">
-            <div class="product-media">
-              <img src="assets/p3.jpg" alt="Buket ve çikolata kombin" loading="lazy" itemprop="image">
+          <!-- 3 -->
+          <article class="p-card product-item reveal" data-cat="kombin" data-name="buket çikolata kombin hediye">
+            <div class="p-media">
+              <img src="assets/10.jpeg" alt="Buket ve çikolata kombin" loading="lazy">
             </div>
-            <div class="product-body">
-              <h3 class="product-title" itemprop="name">Buket + Çikolata Kombin</h3>
-              <p class="product-desc" itemprop="description">En çok tercih edilen ikili: buket + premium kutu.</p>
-              <div class="product-meta">
-                <span class="chip">Kombin</span>
-                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                  <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1890</span>
-                </span>
+            <div class="p-body">
+              <h3 class="p-title">Buket</h3>
+              <p class="p-desc">En çok tercih edilen ikili. Premium görünüm, hızlı teslimat.</p>
+              <div class="p-meta">
+                <span class="tag">Kombin</span>
+      
               </div>
-              <button class="btn btn-cta btn-buy order-btn" data-product="Buket + Çikolata Kombin">Sipariş Ver</button>
+              <button class="p-btn order-btn" data-product="Buket + Çikolata Kombin">WhatsApp’tan Sipariş</button>
             </div>
           </article>
-        </div>
 
-        <!-- 4 -->
-        <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cicek" data-name="orkide beyaz saksı çiçeği">
-          <article class="product-card" itemscope itemtype="https://schema.org/Product">
-            <div class="product-media">
-              <img src="assets/p4.jpg" alt="Beyaz orkide saksı" loading="lazy" itemprop="image">
+          <!-- 4 -->
+          <article class="p-card product-item reveal" data-cat="cicek" data-name="orkide beyaz saksı çiçeği">
+            <div class="p-media">
+              <img src="assets/orkide.jpeg" alt="Beyaz orkide saksı" loading="lazy">
             </div>
-            <div class="product-body">
-              <h3 class="product-title" itemprop="name">Beyaz Orkide (Saksı)</h3>
-              <p class="product-desc" itemprop="description">Zarif, modern ve uzun ömürlü. Minimal dekor.</p>
-              <div class="product-meta">
-                <span class="chip">Çiçek</span>
-                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                  <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1490</span>
-                </span>
+            <div class="p-body">
+              <h3 class="p-title">Beyaz Orkide (Saksı)</h3>
+              <p class="p-desc">Zarif, modern, uzun ömürlü. Minimal dekor için ideal.</p>
+              <div class="p-meta">
+                <span class="tag">Çiçek</span>
+
               </div>
-              <button class="btn btn-cta btn-buy order-btn" data-product="Beyaz Orkide (Saksı)">Sipariş Ver</button>
+              <button class="p-btn order-btn" data-product="Beyaz Orkide (Saksı)">WhatsApp’tan Sipariş</button>
             </div>
           </article>
-        </div>
 
-        <!-- 5 -->
-        <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cikolata" data-name="bitter çikolata kutu premium">
-          <article class="product-card" itemscope itemtype="https://schema.org/Product">
-            <div class="product-media">
-              <img src="assets/p5.jpg" alt="Premium bitter çikolata kutusu" loading="lazy" itemprop="image">
+          <!-- 5 -->
+          <article class="p-card product-item reveal" data-cat="cikolata" data-name="premium bitter çikolata kutusu">
+            <div class="p-media">
+              <img src="assets/premıum.jpeg" alt="Premium bitter kutu" loading="lazy">
             </div>
-            <div class="product-body">
-              <h3 class="product-title" itemprop="name">Premium Bitter Kutu</h3>
-              <p class="product-desc" itemprop="description">Yoğun aromalı bitter seçki. Özel kutu düzeni.</p>
-              <div class="product-meta">
-                <span class="chip">Çikolata</span>
-                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                  <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">1090</span>
-                </span>
+            <div class="p-body">
+              <h3 class="p-title">Premium Kutu</h3>
+              <p class="p-desc">Yoğun aromalı bitter seçki. Özel kutu düzeni.</p>
+              <div class="p-meta">
+                <span class="tag">Çikolata</span>
+           
               </div>
-              <button class="btn btn-cta btn-buy order-btn" data-product="Premium Bitter Kutu">Sipariş Ver</button>
+              <button class="p-btn order-btn" data-product="Premium Bitter Kutu">WhatsApp’tan Sipariş</button>
             </div>
           </article>
-        </div>
 
-        <!-- 6 -->
-        <div class="col-12 col-md-6 col-lg-4 mb-3 product-item reveal" data-cat="cicek" data-name="mevsim buketi renkli papatya">
-          <article class="product-card" itemscope itemtype="https://schema.org/Product">
-            <div class="product-media">
-              <img src="assets/p6.jpg" alt="Renkli mevsim buketi" loading="lazy" itemprop="image">
+          <!-- 6 -->
+          <article class="p-card product-item reveal" data-cat="cicek" data-name="mevsim buketi renkli">
+            <div class="p-media">
+              <img src="assets/7.jpeg" alt="Renkli mevsim buketi" loading="lazy">
             </div>
-            <div class="product-body">
-              <h3 class="product-title" itemprop="name">Renkli Mevsim Buketi</h3>
-              <p class="product-desc" itemprop="description">Canlı mevsim çiçekleriyle enerjik bir buket.</p>
-              <div class="product-meta">
-                <span class="chip">Çiçek</span>
-                <span class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                  <meta itemprop="priceCurrency" content="TRY">₺<span itemprop="price">890</span>
-                </span>
+            <div class="p-body">
+              <h3 class="p-title">Renkli Mevsim Buketi</h3>
+              <p class="p-desc">Canlı mevsim çiçekleriyle enerjik ve modern bir buket.</p>
+              <div class="p-meta">
+                <span class="tag">Çiçek</span>
+            
               </div>
-              <button class="btn btn-cta btn-buy order-btn" data-product="Renkli Mevsim Buketi">Sipariş Ver</button>
+              <button class="p-btn order-btn" data-product="Renkli Mevsim Buketi">WhatsApp’tan Sipariş</button>
             </div>
           </article>
         </div>
       </div>
+    </section>
 
-      <div class="text-center mt-2 reveal">
-        <p class="muted mb-2">Daha fazla ürün eklemek için kart bloklarını kopyalayıp çoğalt.</p>
-      </div>
-    </div>
-  </section>
+    <!-- ABOUT (XL) -->
+    <section id="hakkimizda" class="section" style="padding-top: 0;">
+      <div class="container container-xl">
+        <h2 class="title reveal">Hakkımızda</h2>
+        <p class="subtitle reveal">
+          Cem Çiçekçilik & Çikolata; çiçek tasarımını ve premium çikolatayı “temiz ve şık” bir çizgide buluşturur.
+          Hızlı sipariş, özenli paketleme ve güvenli teslimat ile premium hediye deneyimi sunar.
+        </p>
 
-  <hr class="hr-soft m-0" />
-
-  <!-- About -->
-  <section id="hakkimizda">
-    <div class="container">
-      <h2 class="section-title reveal">Hakkımızda</h2>
-      <p class="section-sub reveal">
-        Cem Çiçekçilik & Çikolata; çiçek tasarımını ve premium çikolatayı aynı çizgide buluşturan butik bir dükkândır.
-        Amacımız: “ilk bakışta premium” hissi veren hediye deneyimi.
-      </p>
-
-      <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-          <div class="feature reveal">
+        <div class="grid-3">
+          <div class="card-soft reveal">
             <div class="icon">🌿</div>
             <h3>Tazelik Standardı</h3>
-            <p>Günlük tedarik, seçilmiş çiçekler ve kontrollü hazırlık.</p>
+            <p>Günlük tedarik, seçilmiş çiçekler ve kontrollü hazırlık süreci.</p>
           </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <div class="feature reveal">
+          <div class="card-soft reveal">
             <div class="icon">🍫</div>
             <h3>Premium Çikolata</h3>
-            <p>Hediye formatına uygun kutular, şık iç düzen ve çeşitler.</p>
+            <p>Hediye formatına uygun kutular, şık iç düzen ve seçkin çeşitler.</p>
+          </div>
+          <div class="card-soft reveal">
+            <div class="icon">🧼</div>
+            <h3>Sade Tasarım Dili</h3>
+            <p>Minimal ve modern sunum. Apple hissi: az ama çok iyi.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact -->
-  <section id="iletisim">
-    <div class="container">
-      <h2 class="section-title reveal">İletişim</h2>
-      <p class="section-sub reveal">Hızlı sipariş için WhatsApp / telefon ya da formu kullan.</p>
+    <!-- CONTACT (XL) -->
+    <section id="iletisim" class="section" style="padding-top: 0;">
+      <div class="container container-xl">
+        <h2 class="title reveal">İletişim</h2>
+        <p class="subtitle reveal">WhatsApp/telefon ile hızlı sipariş veya formdan mesaj gönder.</p>
 
-      <div class="contact-card reveal">
-        <div class="row">
-          <div class="col-12 col-md-6 mb-3 mb-md-0">
-            <div class="contact-item">
+        <div class="contact">
+          <div class="contact-block reveal">
+            <div class="item">
               <div aria-hidden="true">📍</div>
               <div>
                 <b>Adres</b>
-                <span>Mersin • (Mahalle / Cadde / No)</span>
+                <span>Mersin • (Nusratiye, Çakmak Cd. No:94, 33050 Akdeniz/Mersin)</span>
               </div>
             </div>
-            <div class="contact-item mt-2">
+            <div class="item">
               <div aria-hidden="true">📞</div>
               <div>
                 <b>Telefon</b>
                 <span><a href="tel:+905398299590">0 539 829 95 90</a></span>
               </div>
             </div>
-            <div class="contact-item mt-2">
+            <div class="item">
               <div aria-hidden="true">🕒</div>
               <div>
                 <b>Çalışma Saatleri</b>
                 <span>Her gün 09:00 – 22:00</span>
               </div>
             </div>
+            <div class="item" style="margin-bottom:0;">
+              <div aria-hidden="true">🚚</div>
+              <div>
+                <b>Teslimat</b>
+                <span>Aynı gün hızlı teslimat (bölgeye göre)</span>
+              </div>
+            </div>
           </div>
 
-          <div class="col-12 col-md-6">
+          <div class="contact-block reveal">
             <form id="contactForm" autocomplete="on">
               <div class="form-group">
-                <label for="name" class="font-weight-bold">Ad Soyad</label>
+                <label for="name">Ad Soyad</label>
                 <input class="form-control" id="name" name="name" placeholder="Adınızı yazın" required />
               </div>
               <div class="form-group">
-                <label for="phone" class="font-weight-bold">Telefon</label>
+                <label for="phone">Telefon</label>
                 <input class="form-control" id="phone" name="phone" placeholder="05xx..." required />
               </div>
               <div class="form-group">
-                <label for="message" class="font-weight-bold">Mesaj</label>
-                <textarea class="form-control" id="message" name="message" rows="3" placeholder="Hangi ürün? Teslimat adresi? Not?" required></textarea>
+                <label for="message">Mesaj</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Hangi ürün? Teslimat adresi? Not?" required></textarea>
               </div>
               <button class="btn btn-cta btn-block" type="submit">WhatsApp’tan Gönder</button>
-              <small class="d-block mt-2 muted">* Form mesajı WhatsApp’a hazırlar (mail göndermez).</small>
+              <small style="display:block; margin-top:.6rem; color: rgba(10,15,10,.55); font-weight:700;">
+                * Bu form e-posta göndermez; WhatsApp mesajı olarak hazırlar.
+              </small>
             </form>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-      <div>© <span id="year"></span> Cem Çiçekçilik & Çikolata</div>
-      <div class="muted">Mobil öncelikli • Hızlı • SEO uyumlu</div>
-    </div>
-  </footer>
+    <!-- FOOTER -->
+    <footer>
+      <div class="container container-xl d-flex flex-column flex-md-row align-items-md-center justify-content-between" style="gap:.6rem;">
+        <div>© <span id="year"></span> Cem Çiçekçilik & Çikolata</div>
+      </div>
+    </footer>
 
-  <!-- WhatsApp FAB -->
-  <a class="wa-fab" id="waFab" href="#" rel="noopener" aria-label="WhatsApp ile sipariş">
-    <span style="font-size:1.1rem;">💬</span> WhatsApp Sipariş
-  </a>
+    <!-- WhatsApp FAB -->
+  
+  </main>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
@@ -819,37 +840,24 @@
 
   <script>
     // ===== Config =====
-    const WA_NUMBER = "905398299590"; // tabeladaki numara (başında 90 ile)
+    const WA_NUMBER = "905398299590";
     const SHOP_NAME = "Cem Çiçekçilik & Çikolata";
 
     // Year
-    $('#year').text(new Date().getFullYear());
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Campaign close => height becomes 0, navbar & sticky bar move up, hero recalculates automatically
-    $('#campaignClose').on('click', function(){
-      $('.campaign-bar').slideUp(180, function(){
-        document.documentElement.style.setProperty('--campaignH', '0px');
-        $('.top-nav').css('top','0px');
-      });
-    });
-
-    // Smooth scroll with correct offset (campaign + nav)
-    function getTopOffset(){
-      const ch = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--campaignH')) || 0;
-      const nh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navH')) || 0;
-      return ch + nh + 14;
-    }
-
+    // Smooth scroll (with sticky header offset)
+    function headerOffset(){ return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navH')) || 72; }
     $('a[href^="#"]').on('click', function(e){
       const target = $(this.getAttribute('href'));
       if(target.length){
         e.preventDefault();
-        $('html, body').stop().animate({ scrollTop: target.offset().top - getTopOffset() }, 420);
+        $('html, body').stop().animate({ scrollTop: target.offset().top - headerOffset() - 10 }, 420);
         $('.navbar-collapse').collapse('hide');
       }
     });
 
-    // Reveal on scroll
+    // Reveal animations
     (function(){
       const els = document.querySelectorAll('.reveal');
       const io = new IntersectionObserver((entries)=>{
@@ -863,13 +871,13 @@
       els.forEach(el => io.observe(el));
     })();
 
-    // Category filter (quick bar)
-    const $catBtns = $('.cat-pill');
+    // Product filtering + search
+    const $filters = $('.filter');
     const $items = $('.product-item');
     const $search = $('#searchInput');
 
     function applyFilter(){
-      const activeCat = $('.cat-pill.active').data('filter') || 'all';
+      const activeCat = $('.filter.active').data('filter') || 'all';
       const q = ($search.val() || '').toLowerCase().trim();
 
       $items.each(function(){
@@ -881,36 +889,34 @@
       });
     }
 
-    $catBtns.on('click', function(){
-      const f = $(this).data('filter');
-      if(!f) return;
-      $catBtns.removeClass('active');
+    $filters.on('click', function(){
+      $filters.removeClass('active');
       $(this).addClass('active');
       applyFilter();
-      // products section'e indir
-      const t = $('#urunler');
-      $('html, body').stop().animate({ scrollTop: t.offset().top - getTopOffset() }, 360);
     });
 
-    $search.on('input', function(){ applyFilter(); });
+    $search.on('input', applyFilter);
 
-    // Hero buttons that set category
-    $('[data-category]').on('click', function(){
-      const cat = $(this).data('category');
-      const btn = $catBtns.filter(`[data-filter="${cat}"]`);
+    // Hero quick filter buttons
+    $('.filter-jump').on('click', function(){
+      const f = $(this).data('filter');
+      const btn = $filters.filter(`[data-filter="${f}"]`);
       if(btn.length){
-        $catBtns.removeClass('active');
+        $filters.removeClass('active');
         btn.addClass('active');
       }
       applyFilter();
+      const t = $('#urunler');
+      $('html, body').stop().animate({ scrollTop: t.offset().top - headerOffset() - 10 }, 420);
     });
 
-    // Order buttons -> open WhatsApp with product name
+    // WhatsApp helper
     function openWA(text){
       const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
       window.open(url, '_blank', 'noopener');
     }
 
+    // Order buttons
     $('.order-btn').on('click', function(){
       const product = $(this).data('product') || 'Ürün';
       const msg =
@@ -938,7 +944,7 @@
       openWA(text);
     });
 
-    // WhatsApp floating button
+    // WhatsApp FAB
     $('#waFab').on('click', function(e){
       e.preventDefault();
       const text =
@@ -949,12 +955,17 @@
         `Not: (varsa)\n`;
       openWA(text);
     });
-
-    // Carousel pause/cycle for performance
-    document.addEventListener('visibilitychange', function(){
-      if(document.hidden) $('#heroCarousel').carousel('pause');
-      else $('#heroCarousel').carousel('cycle');
-    });
   </script>
+<a href="https://wa.me/905398299590"
+   class="wa-bubble"
+   target="_blank"
+   aria-label="WhatsApp ile sipariş">
+
+  <svg viewBox="0 0 32 32" width="30" height="30">
+    <path fill="white"
+      d="M16.01 3C8.83 3 3 8.82 3 15.99c0 2.82.92 5.42 2.47 7.54L3.4 29l5.66-1.98a12.94 12.94 0 0 0 6.95 2.02c7.18 0 13.01-5.82 13.01-12.99C29.02 8.82 23.19 3 16.01 3zm0 23.7c-2.19 0-4.33-.64-6.15-1.84l-.44-.28-3.36 1.17 1.1-3.27-.29-.46a10.64 10.64 0 0 1-1.66-5.63c0-5.9 4.8-10.7 10.7-10.7s10.7 4.8 10.7 10.7-4.8 10.7-10.7 10.7zm5.87-8.04c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.52-.16-.74.16-.22.32-.85 1.05-1.04 1.27-.19.22-.38.24-.7.08-.32-.16-1.36-.5-2.6-1.6-.96-.86-1.6-1.92-1.79-2.24-.19-.32-.02-.5.14-.66.14-.14.32-.38.48-.56.16-.19.22-.32.32-.54.11-.22.05-.41-.03-.57-.08-.16-.74-1.77-1.02-2.43-.27-.65-.55-.56-.74-.57h-.63c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.67 0 1.57 1.16 3.09 1.32 3.31.16.22 2.28 3.48 5.53 4.88.77.33 1.37.53 1.84.68.77.24 1.47.21 2.02.13.62-.09 1.9-.78 2.16-1.53.27-.75.27-1.39.19-1.53-.08-.14-.3-.22-.62-.38z"/>
+  </svg>
+
+</a>
 </body>
 </html>
