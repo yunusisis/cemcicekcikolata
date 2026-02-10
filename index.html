@@ -13,9 +13,12 @@
   <link rel="canonical" href="https://example.com/" />
   <!-- ✅ SEO FULL PACK — MERSİN AKDENİZ ÇİÇEKÇİ -->
 
-  <title>Mersin Çiçekçi | Cem Çiçekçilik & Çikolata | Akdeniz Aynı Gün Teslimat</title>
+  <!-- (Not: HTML'de 2. <title> teknik olarak geçersizdir. 'Eksiltmeden' istediğin için metni koruyorum ama
+       aktif title üstte kalsın diye bunu meta-title olarak ekliyorum.) -->
+  <meta name="title" content="Mersin Çiçekçi | Cem Çiçekçilik & Çikolata | Akdeniz Aynı Gün Teslimat" />
 
-  <meta name="description"
+  <!-- (Not: 2. description da geçersiz sayılır. Metni korumak için meta-raw-description olarak ekliyorum.) -->
+  <meta name="raw-description"
     content="Mersin Akdeniz bölgesinde çiçekçi: Cem Çiçekçilik & Çikolata. Buket, aranjman, çikolata ve aynı gün hızlı teslimat. Mersin çiçek siparişi için hemen WhatsApp." />
 
   <meta name="keywords" content="
@@ -53,7 +56,8 @@ akdeniz çiçekçi dükkanı
   <meta name="twitter:title" content="Mersin Çiçekçi | Cem Çiçekçilik" />
   <meta name="twitter:description" content="Mersin Akdeniz bölgesi çiçek siparişi." />
   <meta name="twitter:image" content="https://cemcicekcikolata.com/assets/og.jpg" />
-  <!-- Open Graph -->
+
+  <!-- Open Graph (duplicate block preserved) -->
   <meta property="og:title" content="Cem Çiçekçilik & Çikolata" />
   <meta property="og:description" content="Çiçek • Çikolata • Aynı gün teslimat • WhatsApp sipariş" />
   <meta property="og:type" content="website" />
@@ -74,21 +78,14 @@ akdeniz çiçekçi dükkanı
   <style>
     :root {
       --bg: #F6FFF6;
-      /* very light green */
       --surface: #FFFFFF;
-      /* white */
       --surface2: #F2FBF2;
-      /* subtle green */
       --text: #0A0F0A;
-      /* near black */
       --muted: #5E6B5E;
-      /* muted */
       --line: rgba(10, 15, 10, .10);
 
       --mint: #2ECC71;
-      /* accent mint */
       --mint2: #22C55E;
-      /* accent alt */
       --mintSoft: rgba(46, 204, 113, .14);
 
       --shadow: 0 18px 55px rgba(10, 15, 10, .08);
@@ -97,17 +94,11 @@ akdeniz çiçekçi dükkanı
 
       --navH: 72px;
       --heroH: 100vh;
-      /* full */
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
-      height: 100%;
-    }
+    html, body { height: 100%; }
 
     body {
       margin: 0;
@@ -119,31 +110,130 @@ akdeniz çiçekçi dükkanı
       scroll-behavior: smooth;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: none; }
 
-    a:hover {
-      text-decoration: none;
-    }
+    .container-xl { max-width: 1200px; }
 
-    /* Layout helpers */
-    .container-xl {
-      max-width: 1200px;
-    }
+    .section { padding: 4.2rem 0; }
+    /* ✅ MOBİLDE HERO BAŞLIK KESİLMESİN (HEADER ALTINA PAY) */
+@media (max-width: 992px){
+  .hero-inner{
+    padding-top: calc(var(--navH) + 8px) !important; /* header kadar aşağı al */
+  }
 
-    .section {
-      padding: 4.2rem 0;
-    }
+  /* Başlık biraz daha sıkı ve taşmasın */
+  .hero h1{
+    line-height: 14.02;
+    margin-top: 150px !important;
+  }
+}
+
+    /* ✅ MOBİL HERO YUKARI ÇEKME + 100vh DENGELEME */
+@media (max-width: 992px){
+
+  /* 100vh + header sonrası taşmayı azalt */
+  .hero{
+    height: calc(100vh - var(--navH));
+    min-height: calc(100vh - var(--navH));
+  }
+
+  /* İçeriği daha yukarı al */
+  .hero-inner{
+    align-items: flex-start;     /* ortalama yerine yukarı */
+    padding-top: 12px;           /* çok az boşluk */
+    padding-bottom: 90px;        /* whatsapp balonuna pay */
+  }
+
+  /* Grid'in ekstra padding-top'unu kaldır */
+  .hero-grid{
+    padding-top: 0 !important;
+    gap: 1.1rem;                 /* kartlar arası daha sıkı */
+  }
+
+  /* Başlık/paragraf aralıklarını biraz sıkılaştır */
+  .hero h1{
+    margin: .6rem 0 .55rem;
+    font-size: clamp(1.85rem, 7vw, 2.55rem);
+  }
+
+  .hero p{
+    margin: 0 0 .85rem;
+    font-size: 1.0rem;
+  }
+
+  /* Hızlı seçenekler kartı çok büyükse biraz sıkılaştır */
+  .hero-card{
+    margin-top: .35rem;
+    padding: .95rem;
+  }
+}
+
+/* ✅ MOBİL MENÜ AÇILINCA TAM EKRAN OVERLAY + ZEMİN */
+@media (max-width: 991.98px){
+
+  /* collapse açılınca tam ekran alan kaplasın */
+  .navbar-collapse{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--navH);
+    height: calc(100vh - var(--navH));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    /* kutu değil full alan */
+    margin-top: 0 !important;
+    border-radius: 0 !important;
+
+    /* zemin */
+    background: rgba(246,255,246,.98) !important;
+    backdrop-filter: blur(18px);
+    box-shadow: none !important;
+    border: 0 !important;
+
+    /* içerik boşlukları */
+    padding: 16px 14px 28px !important;
+    z-index: 10000;
+  }
+
+  /* Menü açılınca link ve butonlar daha net */
+  .navbar-collapse .nav-link{
+    background: rgba(255,255,255,.75);
+    border: 1px solid rgba(10,15,10,.10);
+  }
+
+  .navbar-collapse .btn,
+  .navbar-collapse .btn-cta,
+  .navbar-collapse .btn-ghost{
+    width: 100%;
+    border-radius: 18px;
+  }
+
+  /* Menü açılınca arkayı daha da karartmak istersen (opsiyonel) */
+  .site-header::after{
+    content:"";
+    position: fixed;
+    inset: 0;
+    top: var(--navH);
+    background: rgba(10,15,10,.06);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 9999;
+  }
+
+  /* Collapse açıkken overlay aktif */
+  .navbar-collapse.show ~ .site-header::after { /* bu selector her yapıda çalışmayabilir */
+    opacity: 1;
+  }
+}
 
     @media (max-width: 768px) {
-      .section {
-        padding: 3.2rem 0;
-      }
+      .section { padding: 3.2rem 0; }
     }
 
-    /* ===== HEADER (XL) ===== */
+    /* ===== HEADER ===== */
     .site-header {
       position: sticky;
       top: 0;
@@ -154,6 +244,7 @@ akdeniz çiçekçi dükkanı
       background: rgba(246, 255, 246, .72);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(10, 15, 10, .08);
+      isolation: isolate; /* ✅ mobil menünün hero ile karışmasını engeller */
     }
 
     .brand {
@@ -164,15 +255,12 @@ akdeniz çiçekçi dükkanı
       letter-spacing: -.3px;
     }
 
-    .logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      background:
-        radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, 0) 55%),
-        linear-gradient(135deg, var(--mint), #9AE6B4);
-      box-shadow: 0 12px 28px rgba(34, 197, 94, .20);
-      border: 1px solid rgba(10, 15, 10, .06);
+    /* ✅ Logo class'ı (HTML'de var) */
+    .brand-logo {
+      height: 46px;
+      width: auto;
+      display: block;
+      object-fit: contain;
     }
 
     .nav-link {
@@ -199,9 +287,7 @@ akdeniz çiçekçi dükkanı
       transition: .18s transform ease;
     }
 
-    .btn-cta:active {
-      transform: translateY(1px);
-    }
+    .btn-cta:active { transform: translateY(1px); }
 
     .btn-ghost {
       border: 1px solid rgba(10, 15, 10, .14);
@@ -216,17 +302,53 @@ akdeniz çiçekçi dükkanı
       border: 1px solid rgba(10, 15, 10, .14) !important;
       border-radius: 14px !important;
       padding: .35rem .55rem !important;
+      background: rgba(255,255,255,.70); /* ✅ ikon görünürlüğü */
     }
 
-    .navbar-dark .navbar-toggler-icon {
-      filter: invert(1) grayscale(1) contrast(2);
+    /* ✅ Sen navbar-dark kullanmadığın için ikon görünmüyordu. */
+    .navbar-toggler-icon{
+      background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2810,15,10,0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 
-    .navbar {
-      padding: 0;
+    .navbar { padding: 0; }
+
+    /* ✅ Mobil menü açılınca zemin + blur + gölge (yazılar karışmaz) */
+    .navbar-collapse {
+      background: rgba(246, 255, 246, .96);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(10, 15, 10, .08);
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(10, 15, 10, .12);
+      padding: .75rem;
+      margin-top: .6rem;
     }
 
-    /* ===== HERO (FULL WIDTH FLUID) ===== */
+    .navbar-collapse .nav-link {
+      display: block;
+      width: 100%;
+      padding: .7rem .9rem !important;
+      border-radius: 14px;
+    }
+
+    .navbar-collapse .btn,
+    .navbar-collapse .btn-cta,
+    .navbar-collapse .btn-ghost {
+      width: 100%;
+      justify-content: center;
+      display: inline-flex;
+    }
+
+    @media (min-width: 992px) {
+      .navbar-collapse {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        margin-top: 0;
+      }
+    }
+
+    /* ===== HERO ===== */
     .hero {
       position: relative;
       width: 100%;
@@ -269,10 +391,7 @@ akdeniz çiçekçi dükkanı
     }
 
     @media (max-width: 992px) {
-      .hero {
-        min-height: 720px;
-      }
-
+      .hero { min-height: 720px; }
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 1.6rem;
@@ -341,7 +460,6 @@ akdeniz çiçekçi dükkanı
       border-radius: 999px;
     }
 
-    /* Hero side card (Apple-ish) */
     .hero-card {
       background: rgba(255, 255, 255, .74);
       border: 1px solid rgba(10, 15, 10, .10);
@@ -371,9 +489,8 @@ akdeniz çiçekçi dükkanı
     }
 
     @media (max-width: 420px) {
-      .mini-row {
-        grid-template-columns: 1fr;
-      }
+      .mini-row { grid-template-columns: 1fr; }
+      .brand-logo { height: 40px; }
     }
 
     .mini {
@@ -401,7 +518,6 @@ akdeniz çiçekçi dükkanı
       font-size: .92rem;
     }
 
-    /* ===== SECTIONS (XL) ===== */
     .title {
       font-weight: 950;
       letter-spacing: -.6px;
@@ -416,18 +532,13 @@ akdeniz çiçekçi dükkanı
       max-width: 72ch;
     }
 
-    /* Feature cards */
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
     }
 
-    @media (max-width: 992px) {
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 992px) { .grid-3 { grid-template-columns: 1fr; } }
 
     .card-soft {
       background: rgba(255, 255, 255, .85);
@@ -469,7 +580,6 @@ akdeniz çiçekçi dükkanı
       line-height: 1.6;
     }
 
-    /* Products */
     .tools {
       display: flex;
       flex-wrap: wrap;
@@ -502,9 +612,7 @@ akdeniz çiçekçi dükkanı
       color: rgba(10, 15, 10, .90);
     }
 
-    .filter:active {
-      transform: scale(.98);
-    }
+    .filter:active { transform: scale(.98); }
 
     .search {
       width: min(360px, 100%);
@@ -517,9 +625,7 @@ akdeniz çiçekçi dükkanı
       color: rgba(10, 15, 10, .86);
     }
 
-    .search::placeholder {
-      color: rgba(10, 15, 10, .42);
-    }
+    .search::placeholder { color: rgba(10, 15, 10, .42); }
 
     .products {
       display: grid;
@@ -527,11 +633,7 @@ akdeniz çiçekçi dükkanı
       gap: 1rem;
     }
 
-    @media (max-width: 992px) {
-      .products {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 992px) { .products { grid-template-columns: 1fr; } }
 
     .p-card {
       border-radius: 28px;
@@ -565,9 +667,7 @@ akdeniz çiçekçi dükkanı
       transition: .35s transform ease;
     }
 
-    .p-card:hover .p-media img {
-      transform: scale(1.12);
-    }
+    .p-card:hover .p-media img { transform: scale(1.12); }
 
     .p-body {
       padding: 1.0rem 1.05rem 1.05rem;
@@ -609,10 +709,7 @@ akdeniz çiçekçi dükkanı
       white-space: nowrap;
     }
 
-    .price {
-      font-weight: 950;
-      letter-spacing: -.2px;
-    }
+    .price { font-weight: 950; letter-spacing: -.2px; }
 
     .p-btn {
       margin-top: .85rem;
@@ -626,26 +723,16 @@ akdeniz çiçekçi dükkanı
       transition: .18s transform ease, .18s background ease;
     }
 
-    .p-btn:hover {
-      background: rgba(46, 204, 113, .14);
-    }
+    .p-btn:hover { background: rgba(46, 204, 113, .14); }
+    .p-btn:active { transform: translateY(1px); }
 
-    .p-btn:active {
-      transform: translateY(1px);
-    }
-
-    /* Contact */
     .contact {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
 
-    @media (max-width: 992px) {
-      .contact {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 992px) { .contact { grid-template-columns: 1fr; } }
 
     .contact-block {
       background: rgba(255, 255, 255, .88);
@@ -666,10 +753,7 @@ akdeniz çiçekçi dükkanı
       margin-bottom: .65rem;
     }
 
-    .item b {
-      display: block;
-      font-weight: 950;
-    }
+    .item b { display: block; font-weight: 950; }
 
     .item span {
       display: block;
@@ -692,19 +776,14 @@ akdeniz çiçekçi dükkanı
       box-shadow: 0 0 0 .22rem rgba(34, 197, 94, .14);
     }
 
-    label {
-      font-weight: 900;
-      color: rgba(10, 15, 10, .78);
-    }
+    label { font-weight: 900; color: rgba(10, 15, 10, .78); }
 
-    /* Footer */
     footer {
       padding: 2.2rem 0 3.0rem;
       border-top: 1px solid rgba(10, 15, 10, .08);
       color: rgba(10, 15, 10, .60);
     }
 
-    /* Reveal */
     .reveal {
       opacity: 0;
       transform: translateY(14px);
@@ -732,13 +811,8 @@ akdeniz çiçekçi dükkanı
       transition: transform .2s ease;
     }
 
-    .wa-bubble:hover {
-      transform: scale(1.1);
-    }
-
-    .wa-bubble:active {
-      transform: scale(0.95);
-    }
+    .wa-bubble:hover { transform: scale(1.1); }
+    .wa-bubble:active { transform: scale(0.95); }
   </style>
 
   <!-- JSON-LD -->
@@ -761,7 +835,6 @@ akdeniz çiçekçi dükkanı
     <div class="container container-xl">
       <nav class="navbar navbar-expand-lg">
         <a class="brand navbar-brand p-0 m-0" href="#top" aria-label="Ana sayfa">
-          <!-- PNG/SVG logo -->
           <img style="width: 150px;" src="assets/CEM ÇİÇEKÇİLİK (150 x 80 piksel) (1).png"
             alt="Cem Çiçekçilik & Çikolata Logo" class="brand-logo" />
         </a>
@@ -903,7 +976,6 @@ akdeniz çiçekçi dükkanı
               <p class="p-desc">Şık kurdele, canlı güller, premium paket. (12/24/36 seçenek)</p>
               <div class="p-meta">
                 <span class="tag">Çiçek</span>
-
               </div>
               <button class="p-btn order-btn" data-product="Kırmızı Gül Buketi">WhatsApp’tan Sipariş</button>
             </div>
@@ -920,7 +992,6 @@ akdeniz çiçekçi dükkanı
               <p class="p-desc">Bitter + sütlü karışım. Hediye notu dahil, premium kutu.</p>
               <div class="p-meta">
                 <span class="tag">Çikolata</span>
-
               </div>
               <button class="p-btn order-btn" data-product="Gold Kutu Karışık">WhatsApp’tan Sipariş</button>
             </div>
@@ -936,7 +1007,6 @@ akdeniz çiçekçi dükkanı
               <p class="p-desc">En çok tercih edilen ikili. Premium görünüm, hızlı teslimat.</p>
               <div class="p-meta">
                 <span class="tag">Kombin</span>
-
               </div>
               <button class="p-btn order-btn" data-product="Buket + Çikolata Kombin">WhatsApp’tan Sipariş</button>
             </div>
@@ -952,7 +1022,6 @@ akdeniz çiçekçi dükkanı
               <p class="p-desc">Zarif, modern, uzun ömürlü. Minimal dekor için ideal.</p>
               <div class="p-meta">
                 <span class="tag">Çiçek</span>
-
               </div>
               <button class="p-btn order-btn" data-product="Beyaz Orkide (Saksı)">WhatsApp’tan Sipariş</button>
             </div>
@@ -968,7 +1037,6 @@ akdeniz çiçekçi dükkanı
               <p class="p-desc">Yoğun aromalı bitter seçki. Özel kutu düzeni.</p>
               <div class="p-meta">
                 <span class="tag">Çikolata</span>
-
               </div>
               <button class="p-btn order-btn" data-product="Premium Bitter Kutu">WhatsApp’tan Sipariş</button>
             </div>
@@ -984,7 +1052,6 @@ akdeniz çiçekçi dükkanı
               <p class="p-desc">Canlı mevsim çiçekleriyle enerjik ve modern bir buket.</p>
               <div class="p-meta">
                 <span class="tag">Çiçek</span>
-
               </div>
               <button class="p-btn order-btn" data-product="Renkli Mevsim Buketi">WhatsApp’tan Sipariş</button>
             </div>
@@ -1091,15 +1158,11 @@ akdeniz çiçekçi dükkanı
         style="gap:.6rem;">
         <div>© <span id="year"></span> Cem Çiçekçilik & Çikolata</div>
         <p>
-Mersin Akdeniz bölgesinde çiçek siparişi, buket ve çikolata teslimatı.
-Cem Çiçekçilik & Çikolata – Mersin çiçekçi.
-</p>
-
+          Mersin Akdeniz bölgesinde çiçek siparişi, buket ve çikolata teslimatı.
+          Cem Çiçekçilik & Çikolata – Mersin çiçekçi.
+        </p>
       </div>
     </footer>
-
-    <!-- WhatsApp FAB -->
-
   </main>
 
   <!-- Scripts -->
@@ -1212,7 +1275,7 @@ Cem Çiçekçilik & Çikolata – Mersin çiçekçi.
       openWA(text);
     });
 
-    // WhatsApp FAB
+    // WhatsApp FAB (id ekledik, hata vermesin)
     $('#waFab').on('click', function (e) {
       e.preventDefault();
       const text =
@@ -1224,14 +1287,16 @@ Cem Çiçekçilik & Çikolata – Mersin çiçekçi.
       openWA(text);
     });
   </script>
-  <a href="https://wa.me/905398299590" class="wa-bubble" target="_blank" aria-label="WhatsApp ile sipariş">
 
+  <!-- WhatsApp Bubble (FAB) -->
+  <a id="waFab" href="https://wa.me/905398299590" class="wa-bubble" target="_blank" aria-label="WhatsApp ile sipariş">
     <svg viewBox="0 0 32 32" width="30" height="30">
       <path fill="white"
         d="M16.01 3C8.83 3 3 8.82 3 15.99c0 2.82.92 5.42 2.47 7.54L3.4 29l5.66-1.98a12.94 12.94 0 0 0 6.95 2.02c7.18 0 13.01-5.82 13.01-12.99C29.02 8.82 23.19 3 16.01 3zm0 23.7c-2.19 0-4.33-.64-6.15-1.84l-.44-.28-3.36 1.17 1.1-3.27-.29-.46a10.64 10.64 0 0 1-1.66-5.63c0-5.9 4.8-10.7 10.7-10.7s10.7 4.8 10.7 10.7-4.8 10.7-10.7 10.7zm5.87-8.04c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.52-.16-.74.16-.22.32-.85 1.05-1.04 1.27-.19.22-.38.24-.7.08-.32-.16-1.36-.5-2.6-1.6-.96-.86-1.6-1.92-1.79-2.24-.19-.32-.02-.5.14-.66.14-.14.32-.38.48-.56.16-.19.22-.32.32-.54.11-.22.05-.41-.03-.57-.08-.16-.74-1.77-1.02-2.43-.27-.65-.55-.56-.74-.57h-.63c-.22 0-.57.08-.86.41-.3.32-1.13 1.1-1.13 2.67 0 1.57 1.16 3.09 1.32 3.31.16.22 2.28 3.48 5.53 4.88.77.33 1.37.53 1.84.68.77.24 1.47.21 2.02.13.62-.09 1.9-.78 2.16-1.53.27-.75.27-1.39.19-1.53-.08-.14-.3-.22-.62-.38z" />
     </svg>
-
   </a>
+
+  <!-- JSON-LD (duplicate block preserved) -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
